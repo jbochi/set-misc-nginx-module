@@ -72,6 +72,11 @@ ngx_http_set_misc_decode_base32(ngx_http_request_t *r,
 
     src = v->data; dst = p;
 
+    if (src[0] == '"' && src[v->len - 1] == '"') {
+        v->len -= 2;
+        src++;
+    }
+
     ret = decode_base32(v->len, src, &len, dst);
 
     if (ret == 0 /* OK */) {
